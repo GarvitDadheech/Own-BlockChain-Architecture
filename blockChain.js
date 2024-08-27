@@ -22,11 +22,15 @@ class BlockChain{
         for(let i = 1;i<chain.length;i++) {
             const {timeStamp,prevHash,hash,nonce,difficulty,data} = chain[i];
             const lastHash = chain[i-1].hash;
+            const lastDifficulty = chain[i-1].difficulty;
             if(prevHash!=lastHash) {
                 return false;
             }
             const validatedHash = cryptoHash(timeStamp,prevHash,nonce,difficulty,data);
             if(hash!=validatedHash) {
+                return false;
+            }
+            if(Math.abs(lastDifficulty-difficulty)>1) {
                 return false;
             }
         }
@@ -45,12 +49,7 @@ class BlockChain{
         this.chain = chain;
 
     }
-
-
 }
 
-const blockchain = new BlockChain();
-blockchain.addToBlock({data:"block 1"})
-console.log(blockchain);
-module.exports = {BlockChain}
+module.exports = BlockChain
 
