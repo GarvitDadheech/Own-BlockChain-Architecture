@@ -20,12 +20,12 @@ class BlockChain{
         return false;
         }
         for(let i = 1;i<chain.length;i++) {
-            const {timeStamp,prevHash,hash,data} = chain[i];
+            const {timeStamp,prevHash,hash,nonce,difficulty,data} = chain[i];
             const lastHash = chain[i-1].hash;
             if(prevHash!=lastHash) {
                 return false;
             }
-            const validatedHash = cryptoHash(timeStamp,prevHash,data);
+            const validatedHash = cryptoHash(timeStamp,prevHash,nonce,difficulty,data);
             if(hash!=validatedHash) {
                 return false;
             }
